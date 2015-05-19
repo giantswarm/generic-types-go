@@ -3,15 +3,14 @@ package generictypes
 import (
 	"encoding/json"
 
-	"github.com/alexanderritola/validate"
-	"github.com/alexanderritola/validate/web"
-	"github.com/giantswarm/generic-types-go"
+	"github.com/giantswarm/validate"
+	"github.com/giantswarm/validate/web"
 	"github.com/juju/errgo"
 )
 
 type Domain string
 
-type DomainConfig map[Domain]generictypes.DockerPort
+type DomainConfig map[Domain]DockerPort
 
 // ToSimple just maps the domain config with its custom types to a more simpler
 // map. This can be used for internal management once the validity of domains
