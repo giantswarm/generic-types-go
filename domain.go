@@ -2,11 +2,19 @@ package generictypes
 
 import (
 	"encoding/json"
+	"log"
 
 	"github.com/giantswarm/validate"
 	"github.com/giantswarm/validate/web"
 	"github.com/juju/errgo"
 )
+
+func init() {
+	// Fetch a new list of TLDs from the internet on startup.
+	if err := web.UpdateTLDs(web.IANA); err != nil {
+		log.Printf("[ERROR] Failed to update TLDs: %v\n", err)
+	}
+}
 
 type Domain string
 
