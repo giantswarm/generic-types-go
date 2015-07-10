@@ -64,6 +64,13 @@ func (img DockerImage) DefaultLatestVersion() DockerImage {
 	return img
 }
 
+// Validate checks that the given docker image is valid.
+// Returns nil if valid, or an error if not valid.
+func (img DockerImage) Validate() error {
+	tmp := DockerImage{}
+	return tmp.parse(img.String())
+}
+
 func (img *DockerImage) parse(input string) error {
 	if len(input) == 0 {
 		return errgo.Notef(ErrInvalidFormat, "Zero length")
