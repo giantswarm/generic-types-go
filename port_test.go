@@ -99,3 +99,21 @@ func TestDockerPort__InalidJSONInput(t *testing.T) {
 
 	}
 }
+
+var emptyDockerPortJsonInput = []struct {
+	Input   DockerPort
+	IsEmpty bool
+}{
+	{DockerPort{Port: "", Protocol: ""}, true},
+	{DockerPort{Port: "80", Protocol: ""}, false},
+	{DockerPort{Port: "123", Protocol: "tcp"}, false},
+}
+
+func TestDockerPort_Empty(t *testing.T) {
+	for _, data := range emptyDockerPortJsonInput {
+		empty := data.Input.Empty()
+		if empty != data.IsEmpty {
+			t.Fatalf("Expected Empty() to return %v, got %v", data.IsEmpty, empty)
+		}
+	}
+}
