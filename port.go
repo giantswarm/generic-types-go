@@ -112,6 +112,11 @@ func (d *DockerPort) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Empty returns true if this port is equal to "", false otherwise.
+func (d *DockerPort) Empty() bool {
+	return d.Port == "" // Protocol can be set automatically to TCP so don't check that
+}
+
 func (d *DockerPort) Equals(other DockerPort) bool {
 	return d.Port == other.Port && d.Protocol == other.Protocol
 }
