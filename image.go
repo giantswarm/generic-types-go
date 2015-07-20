@@ -12,7 +12,7 @@ var (
 	// https://github.com/docker/docker/blob/6d6dc2c1a1e36a2c3992186664d4513ce28e84ae/registry/registry.go#L27
 	PatternNamespace = regexp.MustCompile(`^([a-z0-9_]{4,30})$`)
 	PatternImage     = regexp.MustCompile(`^([a-z0-9-_.]+)$`)
-	PatternVersion   = regexp.MustCompile("^[a-zA-Z0-9-\\.]+$")
+	PatternVersion   = regexp.MustCompile("^[a-zA-Z0-9-\\._]+$")
 )
 
 var (
