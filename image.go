@@ -131,8 +131,8 @@ func (img *DockerImage) parse(input string) error {
 	return nil
 }
 
-// Returns all image inforamtion combined: <registry>/<namespace>/<repository>:<version>
-func (img DockerImage) String() string {
+// Returns all image information except for the version: <registry>/<namespace>/<repository>
+func (img DockerImage) UnversionedString() string {
 	var imageString string
 
 	if img.Registry != "" {
@@ -144,6 +144,15 @@ func (img DockerImage) String() string {
 	}
 
 	imageString += img.Repository
+
+	return imageString
+}
+
+// Returns all image information combined: <registry>/<namespace>/<repository>:<version>
+func (img DockerImage) String() string {
+	var imageString string
+
+	imageString = img.UnversionedString()
 
 	if img.Version != "" {
 		imageString += ":" + img.Version
