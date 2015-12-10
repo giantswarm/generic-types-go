@@ -281,7 +281,7 @@ func TestParsingErrors(t *testing.T) {
 }
 
 func TestVersionDefaulting(t *testing.T) {
-	img, _ := ParseDockerImage("redis")
+	img := MustParseDockerImage("redis")
 	latestImage := img.DefaultLatestVersion()
 
 	if img.Version != "" {
@@ -292,7 +292,7 @@ func TestVersionDefaulting(t *testing.T) {
 		t.Fatalf("Expected image version to be unchanged, got '%s'", latestImage.Version)
 	}
 
-	img, _ = ParseDockerImage("ubuntu:14.04")
+	img = MustParseDockerImage("ubuntu:14.04")
 	latestImage = img.DefaultLatestVersion()
 
 	if img.Version != "14.04" {
@@ -305,7 +305,7 @@ func TestVersionDefaulting(t *testing.T) {
 }
 
 func TestNamespaceDefaulting(t *testing.T) {
-	img, _ := ParseDockerImage("redis")
+	img := MustParseDockerImage("redis")
 	libraryImage := img.DefaultLibraryNamespace()
 
 	if img.Namespace != "" {
@@ -316,7 +316,7 @@ func TestNamespaceDefaulting(t *testing.T) {
 		t.Fatalf("Expected namespace to be 'library', got '%s'", libraryImage.Namespace)
 	}
 
-	img, _ = ParseDockerImage("mynamespace/redis")
+	img = MustParseDockerImage("mynamespace/redis")
 	libraryImage = img.DefaultLibraryNamespace()
 
 	if img.Namespace != "mynamespace" {
