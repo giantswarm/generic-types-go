@@ -303,3 +303,27 @@ func TestVersionDefaulting(t *testing.T) {
 		t.Fatalf("Expected image version to be unchanged, got '%s'", latestImage.Version)
 	}
 }
+
+func TestNamespaceDefaulting(t *testing.T) {
+	img, _ := ParseDockerImage("redis")
+	libraryImage := img.DefaultLibraryNamespace()
+
+	if img.Namespace != "" {
+		t.Fatalf("Expected parsed image namespace to empty, got '%s'", img.Namespace)
+	}
+
+	if libraryImage.Namespace != "library" {
+		t.Fatalf("Expected namespace to be 'library', got '%s'", libraryImage.Namespace)
+	}
+
+	img, _ = ParseDockerImage("mynamespace/redis")
+	libraryImage = img.DefaultLibraryNamespace()
+
+	if img.Namespace != "mynamespace" {
+		t.Fatalf("Expected parsed image namespace to be 'mynamespace', got '%s'", img.Namespace)
+	}
+
+	if libraryImage.Namespace != "mynamespace" {
+		t.Fatalf("Expected image version to be unchanged, got '%s'", libraryImage.Namespace)
+	}
+}

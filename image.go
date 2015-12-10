@@ -57,9 +57,20 @@ func (img *DockerImage) UnmarshalJSON(data []byte) error {
 	return img.parse(input)
 }
 
+// DefaultLatestVersion returns an image that has Version set to "latest" when it
+// is unspecified.
 func (img DockerImage) DefaultLatestVersion() DockerImage {
 	if img.Version == "" {
 		img.Version = "latest"
+	}
+	return img
+}
+
+// DefaultLibraryNamespace returns an image that has Namespace set to "library" when it
+// is unspecified.
+func (img DockerImage) DefaultLibraryNamespace() DockerImage {
+	if img.Namespace == "" {
+		img.Namespace = "library"
 	}
 	return img
 }
