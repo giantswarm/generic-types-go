@@ -51,7 +51,8 @@ var stringConversions = []struct {
 	Repository string
 	Version    string
 
-	ExpectedString string
+	ExpectedString            string
+	ExpectedUnversionedString string
 }{
 	{
 		"",
@@ -59,6 +60,7 @@ var stringConversions = []struct {
 		"static-website",
 		"",
 
+		"static-website",
 		"static-website",
 	},
 	{
@@ -68,6 +70,7 @@ var stringConversions = []struct {
 		"",
 
 		"denderello/static-website",
+		"denderello/static-website",
 	},
 	{
 		"",
@@ -76,6 +79,7 @@ var stringConversions = []struct {
 		"0.0.1",
 
 		"static-website:0.0.1",
+		"static-website",
 	},
 	{
 		"",
@@ -84,6 +88,7 @@ var stringConversions = []struct {
 		"0.0.1",
 
 		"denderello/static-website:0.0.1",
+		"denderello/static-website",
 	},
 	{
 		"registry.giantswarm.io",
@@ -91,6 +96,7 @@ var stringConversions = []struct {
 		"static-website",
 		"",
 
+		"registry.giantswarm.io/static-website",
 		"registry.giantswarm.io/static-website",
 	},
 	{
@@ -100,6 +106,7 @@ var stringConversions = []struct {
 		"",
 
 		"registry.giantswarm.io/denderello/static-website",
+		"registry.giantswarm.io/denderello/static-website",
 	},
 	{
 		"registry.giantswarm.io",
@@ -108,6 +115,7 @@ var stringConversions = []struct {
 		"10.1.1",
 
 		"registry.giantswarm.io/denderello/static-website:10.1.1",
+		"registry.giantswarm.io/denderello/static-website",
 	},
 	{
 		"192.168.59.103:5000",
@@ -116,6 +124,7 @@ var stringConversions = []struct {
 		"192.0.0",
 
 		"192.168.59.103:5000/sharethemeal/payment:192.0.0",
+		"192.168.59.103:5000/sharethemeal/payment",
 	},
 }
 
@@ -130,6 +139,21 @@ func TestStringConversion(t *testing.T) {
 
 		if image.String() != data.ExpectedString {
 			t.Fatalf("Unexpected string conversion output: '%s' but got '%s'", data.ExpectedString, image.String())
+		}
+	}
+}
+
+func TestUnversionedStringConversion(t *testing.T) {
+	for _, data := range stringConversions {
+		image := &DockerImage{
+			Registry:   data.Registry,
+			Namespace:  data.Namespace,
+			Repository: data.Repository,
+			Version:    data.Version,
+		}
+
+		if image.UnversionedString() != data.ExpectedUnversionedString {
+			t.Fatalf("Unexpected unversioned string conversion output: '%s' but got '%s'", data.ExpectedUnversionedString, image.UnversionedString())
 		}
 	}
 }
